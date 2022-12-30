@@ -230,7 +230,6 @@ class Counting(commands.Cog):
       if message.channel.id in self.channels:
         if message.author.bot == False:
 
-          # last_line = self.saved[-1]
           database = self.bot.get_channel(1057770300927914005)
           async for sent in database.history(limit=50):
             if sent.author.id == self.bot.user.id:
