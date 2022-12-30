@@ -70,6 +70,10 @@ class MyBot(commands.Bot):
             if last_line != [0,0]:
                 await database.send([0,0])
 
-bot = MyBot()
-token = "MTA1NDE0NDk0MjUyNTY0ODg5OQ.Gt0A9B.inIB-bmhjxut2FTaKc5NTj4d6LK9hEgxge4HIo"
-bot.run(token)
+try:
+    bot = MyBot()
+    token = "MTA1NDE0NDk0MjUyNTY0ODg5OQ.Gt0A9B.inIB-bmhjxut2FTaKc5NTj4d6LK9hEgxge4HIo"
+    bot.run(token)
+finally:
+    webhook = discord.SyncWebhook.from_url('https://discordapp.com/api/webhooks/1057495225905463387/PZcbSvaDZEtR-a3uqNU6V5r12O0h7WucMX3rtpnl1dR31M3cJqIDpOV7ChWsPrsMMVac')
+    webhook.send(content='Hum Campers is Now Offline 🛑')
