@@ -94,13 +94,13 @@ class DeveloperCog(commands.Cog):
             channel = False
 
 
-        for filename in [m.name for m in iter_modules(['DPY-Hum-Campers/cogs'])]:
+        for filename in [m.name for m in iter_modules(['cogs'])]:
                 cogs_list = f"{cogs_list} \n{filename}"
 
         embed = discord.Embed(color=discord.Color.green(), description=cogs_list)
         message = await ctx.send(embed=embed)
 
-        for filename in [m.name for m in iter_modules(['DPY-Hum-Campers/cogs'])]:
+        for filename in [m.name for m in iter_modules(['cogs'])]:
                 try:
                     await self.bot.reload_extension("cogs.{}".format(filename))
                     to_send = f"{to_send} \n`✅` Loaded - `cogs/{filename}`"

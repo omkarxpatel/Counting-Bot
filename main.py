@@ -16,7 +16,7 @@ class MyBot(commands.Bot):
                          owner_ids=[838974822288851005, 641069257140207616]
                          )
 
-        self.initial_extensions = [m.name for m in iter_modules(['DPY-Hum-Campers/cogs'], prefix='cogs.')]
+        self.initial_extensions = [m.name for m in iter_modules(['cogs'], prefix='cogs.')]
         self.reset_db_on_startup = False
 
     async def setup_hook(self):
