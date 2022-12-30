@@ -181,6 +181,9 @@ class Counting(commands.Cog):
     
     await ctx.reply(embed=embed, view = ConfigView())
 
+  @commands.command()
+  async def a(self, ctx):
+    await ctx.reply("Hi")
   
 
   @commands.Cog.listener()
