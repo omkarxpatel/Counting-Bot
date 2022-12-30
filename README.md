@@ -1,3 +1,3 @@
 # Hum-Campers
 
-wow
+Hum Campers discord bot
