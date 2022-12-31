@@ -155,7 +155,6 @@ class ConfigView(discord.ui.View):
         super().__init__()
         self.add_item(ConfigDrop())
 
-
 class Counting(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
@@ -184,7 +183,6 @@ class Counting(commands.Cog):
   @commands.command()
   async def a(self, ctx):
     await ctx.reply("Hi")
-  
 
   @commands.Cog.listener()
   async def on_message_delete(self, message):
@@ -247,7 +245,6 @@ class Counting(commands.Cog):
             else:
               continue
 
-
           if message.author.id != last_line[-1]:
             if content.isdigit():
 
@@ -296,7 +293,6 @@ class Counting(commands.Cog):
               await message.add_reaction("\U000026a0")
 
               await message.channel.send(f"{self.cross} You can not count twice in a row", delete_after=5)
-
 
 async def setup(bot):
   await bot.add_cog(Counting(bot))
