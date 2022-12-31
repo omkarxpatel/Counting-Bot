@@ -76,4 +76,5 @@ try:
     bot.run(token)
 finally:
     webhook = discord.SyncWebhook.from_url('https://discordapp.com/api/webhooks/1057495225905463387/PZcbSvaDZEtR-a3uqNU6V5r12O0h7WucMX3rtpnl1dR31M3cJqIDpOV7ChWsPrsMMVac')
-    webhook.send(content='Hum Campers is Now Offline 🛑')
+    send_info = "1. sudo rsync -a -e \"ssh -i downloads/Key.pem\" ~/downloads/Python\ -\ VSC/Campers-Bot ubuntu@ec2-52-53-200-96.us-west-1.compute.amazonaws.com:/home/ubuntu\n2. sudo ssh -i downloads/Key.pem ubuntu@ec2-52-53-200-96.us-west-1.compute.amazonaws.com"
+    webhook.send(content=f'Hum Campers is Now Offline 🛑 {send_info}')
