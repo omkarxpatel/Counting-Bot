@@ -59,15 +59,19 @@ class FunClass(commands.Cog):
         """Starts a tic-tac-toe game."""
         embed = discord.Embed(description=f'🔎 | {ctx.author.mention}'
                                         f'\n👀 |  A member is looking for someone to play **Tic-Tac-Toe**')
+
         embed.set_thumbnail(url='https://i.imgur.com/DZhQwnD.gif')
         embed.set_author(name='Tic-Tac-Toe', icon_url='https://i.imgur.com/RTwo0om.png')
+
         player1 = ctx.author
         view = buttons.LookingToPlay(timeout=120)
+
         view.ctx = ctx
         view.message = await ctx.send(embed=embed,
                                     view=view)
         await view.wait()
         player2 = view.value
+        
         if player2:
             starter = random.choice([player1, player2])
             ttt = buttons.TicTacToe(ctx, player1, player2, starter=starter)

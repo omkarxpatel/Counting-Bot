@@ -13,9 +13,10 @@ class LookingForButton(discord.ui.Button):
     async def callback(self, interaction: discord.Interaction):
         assert self.view is not None
         view: LookingToPlay = self.view
+        
         if interaction.user and interaction.user.id == view.ctx.author.id:
-            return await interaction.response.send_message(embed=discord.Embed(title='Error Occured', description='You can\'t play with yourself', color=discord.Color.red()),
-                                                            ephemeral=True)
+            return await interaction.response.send_message(embed=discord.Embed(title='Error Occured', description='You can\'t play with yourself', color=discord.Color.red()), ephemeral=True)
+        
         view.value = interaction.user
         view.stop()
 
@@ -31,10 +32,13 @@ class CancelButton(discord.ui.Button):
         view: LookingToPlay = self.view
         if interaction.user.id == view.ctx.author.id:
             view.value = None
+
             for item in view.children:
                 item.disabled = True
+
             await view.message.edit(view=view)
             view.stop()
+
         else:
             await interaction.response.send_message(embed=discord.Embed(title='Error Occured', description='Only the game author can do that action!', color=discord.Color.red()), 
                                                     ephemeral=True)
@@ -46,15 +50,22 @@ class GiveUp(discord.ui.Button):
         super().__init__(style=discord.ButtonStyle.red, label=(label or f'{self.sep*4}Give up 🏳️{self.sep*4}'),
                         custom_id='giveUp' ,disabled=disabled, row=3)
 
+
     async def callback(self, interaction: discord.Interaction):
         assert self.view is not None
         view: TicTacToe = self.view
         for child in view.children:
             child.disabled = True
+
         if interaction.user.id == view.player1.id:
             winner = view.player2
+
         elif interaction.user.id == view.player2.id:
             winner = view.player1
+
+        else:
+            winner = view.author   
+
         embed = discord.Embed(title=f'{interaction.user} gave up 🏳️',description=f'{winner.mention} has won 🏆',color=discord.Color.greyple())
         await interaction.response.edit_message(embed=embed ,view=view)
         view.stop()
@@ -154,6 +165,7 @@ class TicTacToe(discord.ui.View):
             value = sum(across)
             if value == 3:
                 return self.O
+
             elif value == -3:
                 return self.X
 
@@ -161,18 +173,21 @@ class TicTacToe(discord.ui.View):
             value = self.board[0][line] + self.board[1][line] + self.board[2][line]
             if value == 3:
                 return self.O
+
             elif value == -3:
                 return self.X
 
         diag = self.board[0][2] + self.board[1][1] + self.board[2][0]
         if diag == 3:
             return self.O
+
         elif diag == -3:
             return self.X
 
         diag = self.board[0][0] + self.board[1][1] + self.board[2][2]
         if diag == 3:
             return self.O
+
         elif diag == -3:
             return self.X
 
@@ -184,10 +199,13 @@ class TicTacToe(discord.ui.View):
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
         if interaction.user and interaction.data['custom_id'] == 'giveUp':
             return True
+
         if interaction.user and interaction.user.id == self.current_player.id:
             return True
+
         elif interaction.user and interaction.user.id in (self.player1.id, self.player2.id):
             await interaction.response.send_message(embed=discord.Embed(title='Not your turn', description='Wait for your turn to make a move', color=discord.Color.red()), ephemeral=True)
+        
         elif interaction.user:
             await interaction.response.send_message(embed=discord.Embed(title='Forbidden ', description='You aren\'t a part of this game!', color=discord.Color.red()), ephemeral=True)
         return False
