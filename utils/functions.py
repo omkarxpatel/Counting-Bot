@@ -15,7 +15,6 @@ class Spotify:
     def __init__(self, *, bot, member) -> None:
         self.member = member
         self.bot = bot
-        self.chosen_font = "assets/Ubuntu-Regular.tff"
         self.embed = discord.Embed(title=f"{member.display_name} is Listening to Spotify", color = discord.Color.green())
         self.regex = "(https\:\/\/open\.spotify\.com\/artist\/[a-zA-Z0-9]+)"
         self.headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'}
@@ -64,22 +63,29 @@ class Spotify:
         s = ColorThief(pic)
         color = s.get_palette(color_count=2)
         result = Image.new('RGBA', (575, 170))
+
         draw = ImageDraw.Draw(result)
         color_font = "white" if sum(color[1]) < 450 else "black" 
         draw.rounded_rectangle(((0, 0), (575, 170)), 20, fill=color[1])
         s = Image.open(pic)
+
         s = s.resize((128, 128))
         result1 = Image.new('RGBA', (129, 128))
         Image.Image.paste(result, result1, (29, 23))
         Image.Image.paste(result, s, (27, 20))
-        font = ImageFont.truetype(self.chosen_font, 28, layout_engine=ImageFont.LAYOUT_BASIC)
-        font2 = ImageFont.truetype(self.chosen_font, 18, layout_engine=ImageFont.LAYOUT_BASIC)
+
+        chosen_font = "assets/Ubuntu-Medium.ttf"
+        font = ImageFont.truetype(chosen_font, 28, layout_engine=ImageFont.LAYOUT_BASIC)
+        font2 = ImageFont.truetype(chosen_font, 18, layout_engine=ImageFont.LAYOUT_BASIC)
+
         draw.text((170, 20), name, color_font,font=font)
         draw.text((170, 55), artists, color_font,font=font2)
         draw.text((500, 120), time, color_font,font=font2)
         draw.text((170, 120), time_at, color_font,font=font2)
+
         draw.rectangle(((230, 130), (490, 127)), fill="grey")
         draw.rectangle(((230, 130), (230 + track, 127)), fill=color_font)
+
         draw.ellipse((230 + track-5, 122, 230 + track+5, 134), fill = color_font, outline =color_font)
         output = BytesIO()
         result.save(output, "png")
