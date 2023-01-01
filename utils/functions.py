@@ -15,6 +15,7 @@ class Spotify:
     def __init__(self, *, bot, member) -> None:
         self.member = member
         self.bot = bot
+        self.font = "Ubuntu-Regular.tff"
         self.embed = discord.Embed(title=f"{member.display_name} is Listening to Spotify", color = discord.Color.green())
         self.regex = "(https\:\/\/open\.spotify\.com\/artist\/[a-zA-Z0-9]+)"
         self.headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'}
@@ -71,8 +72,8 @@ class Spotify:
         result1 = Image.new('RGBA', (129, 128))
         Image.Image.paste(result, result1, (29, 23))
         Image.Image.paste(result, s, (27, 20))
-        font = ImageFont.truetype("assets/RubikBubbles-Regular.ttf", 28, layout_engine=ImageFont.LAYOUT_BASIC)
-        font2 = ImageFont.truetype("assets/RubikBubbles-Regular.ttf", 18, layout_engine=ImageFont.LAYOUT_BASIC)
+        font = ImageFont.truetype(self.font, 28, layout_engine=ImageFont.LAYOUT_BASIC)
+        font2 = ImageFont.truetype(self.font, 18, layout_engine=ImageFont.LAYOUT_BASIC)
         draw.text((170, 20), name, color_font,font=font)
         draw.text((170, 55), artists, color_font,font=font2)
         draw.text((500, 120), time, color_font,font=font2)
