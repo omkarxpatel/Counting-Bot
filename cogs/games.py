@@ -28,12 +28,12 @@ class FunClass(commands.Cog):
                 message = await self.bot.wait_for('message', check=check)
 
             except asyncio.TimeoutError:
-                embedtimeout = discord.Embed(title="You didnt respond on time!", description=f'The correct number was {answer}\n You guessed {counter} times')
+                embedtimeout = discord.Embed(title="You didnt respond on time!", description=f'The correct number was `{answer}`\n You guessed `{counter}` times')
                 return await ctx.send(embed=embedtimeout)
 
             else:
                 if message.content.lower() in ['end', 'cancel']:
-                    embedcancel = discord.Embed(title='Canceled the game', description=f'Dont worry! You will get it next time.\n The correct number was {answer}\nYou guessed {counter} times')
+                    embedcancel = discord.Embed(title='Canceled the game', description=f'The correct number was `{answer}`\nYou guessed `{counter}` times')
                     return await ctx.send(embed=embedcancel)
 
                 if message.content.isdigit():
@@ -71,7 +71,7 @@ class FunClass(commands.Cog):
                                     view=view)
         await view.wait()
         player2 = view.value
-        
+
         if player2:
             starter = random.choice([player1, player2])
             ttt = buttons.TicTacToe(ctx, player1, player2, starter=starter)

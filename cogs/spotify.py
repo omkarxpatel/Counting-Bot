@@ -3,7 +3,6 @@ from discord.ext import commands
 from utils import functions
 
 
-
 class Spotify(commands.Cog):
 
     def __init__(self, bot):
@@ -12,6 +11,7 @@ class Spotify(commands.Cog):
     @commands.command(aliases=['sp'])
     @commands.cooldown(5, 60.0, type=commands.BucketType.user)
     async def spotify(self, ctx: commands.Context, member: discord.Member = None):
+  
         member = member or ctx.author
         async with ctx.typing():
             spotify = functions.Spotify(bot=self.bot, member=member)
@@ -24,5 +24,7 @@ class Spotify(commands.Cog):
             
             await ctx.send(embed=embed[0], file=embed[1])
 
-def setup(bot):
-    bot.add_cog(Spotify(bot))
+
+
+async def setup(bot):
+  await bot.add_cog(Spotify(bot))

@@ -77,7 +77,7 @@ class Spotify:
         draw.text((170, 55), artists, color_font,font=font2)
         draw.text((500, 120), time, color_font,font=font2)
         draw.text((170, 120), time_at, color_font,font=font2)
-        draw.rectangle(((230, 130), (490, 127)), fill="grey") # play bar
+        draw.rectangle(((230, 130), (490, 127)), fill="grey")
         draw.rectangle(((230, 130), (230 + track, 127)), fill=color_font)
         draw.ellipse((230 + track-5, 122, 230 + track+5, 134), fill = color_font, outline =color_font)
         output = BytesIO()
