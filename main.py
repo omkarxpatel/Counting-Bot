@@ -46,8 +46,9 @@ class MyBot(commands.Bot):
     async def on_ready(self):
         try:
             await bot.load_extension('jishaku')
+            print(f"{Fore.GREEN} cogs.jishaku loaded{Fore.RESET}")
         except:
-            print(f"{Fore.RED} Could not load jishaku {Fore.RESET}")
+            print(f"{Fore.RED} cogs.jishaku NOT loaded {Fore.RESET}")
 
         print(f"{Fore.GREEN}{bot.user.name} is Online - Version: {discord.__version__}{Fore.RESET}")
         
