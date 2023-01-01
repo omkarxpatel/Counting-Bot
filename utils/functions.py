@@ -99,6 +99,7 @@ class Spotify:
         name = name[0:21] + "..." if len(name) > 21 else name
         rad = await bot.session.get(pog)
         pic = BytesIO(await rad.read())
+        
         return await bot.loop.run_in_executor(None, self.PIL_process, pic, name, artists, time, time_at, track)
 
     @staticmethod
