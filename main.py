@@ -44,6 +44,7 @@ class MyBot(commands.Bot):
         await self.session.close()
 
     async def on_ready(self):
+        bot.load_extension('jishaku')
         print(f"{Fore.GREEN}{bot.user.name} is Online - Version: {discord.__version__}{Fore.RESET}")
         
         value = ""
