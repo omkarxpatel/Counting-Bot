@@ -161,7 +161,7 @@ class Counting(commands.Cog):
     self.saved = [[0,0]]
     self.check = "✅"
     self.cross = "❌"
-    self.channels = [1054268278027063376, 948430079342542879]
+    self.channels = [1059362701362606120]
     
   
   @commands.command()
@@ -181,9 +181,9 @@ class Counting(commands.Cog):
     await ctx.reply(embed=embed, view = ConfigView())
 
   @commands.command()
-  async def a(self, ctx):
-    await ctx.reply("Hi")
-
+  async def s(self,ctx):
+    await ctx.send("**Database:**")
+    
   @commands.Cog.listener()
   async def on_message_delete(self, message):
     global enabled
@@ -258,6 +258,10 @@ class Counting(commands.Cog):
                 self.saved.append(value)
                 await database.send(value)
 
+                
+                stats_database = await database.fetch_message(1059364315662139462)
+                
+
               else:
                 
                 if latest_value == 0:
@@ -274,7 +278,6 @@ class Counting(commands.Cog):
                   
                   await message.channel.send(embed=embed)
 
-                  database = self.bot.get_channel(1057770300927914005)
                   async for sent in database.history(limit=50):
                       if sent.author.id == self.bot.user.id:
                           try:
