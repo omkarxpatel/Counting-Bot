@@ -8,6 +8,7 @@ class Spotify(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
+    
     @commands.command(aliases=['sp'])
     @commands.cooldown(5, 60.0, type=commands.BucketType.user)
     async def spotify(self, ctx: commands.Context, member: discord.Member = None):
