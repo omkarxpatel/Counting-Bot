@@ -95,7 +95,7 @@ class FunClass(commands.Cog):
 
         embed = discord.Embed(title="Typing-Race")
         embed.description = f"Enter the following words the fastest in order to win\n```\n{generated_words}```"
-        embed.set_footer = "Results will appear in 30 seconds"
+        embed.set_footer(text="Results will appear in 30 seconds")
         embed.timestamp = discord.utils.utcnow()
 
         start_time = time.time()
