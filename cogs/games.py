@@ -85,7 +85,7 @@ class FunClass(commands.Cog):
     @commands.command(aliases=['type','type-race'])
     async def typerace(self, ctx: commands.context, length: typing.Optional[int]=6):
         
-        leaderboard = []
+        leaderboard = [[0,0]]
         total_time = length*5
         generated_words = ""
 
@@ -106,35 +106,38 @@ class FunClass(commands.Cog):
         def check(mes):
             return mes.channel == ctx.channel
 
-        while time.time()-start_time < total_time:
+        while time.time()-start_time < total_time//2:
             message = await self.bot.wait_for('message', check=check)
-            print(message.content)
-            print(generated_words)
+            print(message.content, len(message.content))
+            print(generated_words, len(generated_words))
             
             if message.content == generated_words:
                 react = False
+
                 for x in leaderboard:
-                    if x[0] != message.author.id:
+                    if x[0] != message.author.name:
                         react = True
+                    else:
+                        react = False
 
                 if react:
-                    user_data = [message.author.id, round(time.time()-start_time, 3)]
+                    user_data = [message.author.name, round(time.time()-start_time, 3)]
                     leaderboard.append(user_data)
                     await message.add_reaction("✅")
-                    break
             
             else:
                 await message.add_reaction("\U000026a0")
 
+        print("time done")
         results = "```\n"
-        winners = ["🥇","🥈","🥉"]
+        winners = ["","🥇","🥈","🥉"]
 
         for data in leaderboard:
 
-            if data in leaderboard[:3]:
+            if data in leaderboard[1:4]:
                 addon = winners[leaderboard.index(data)]
 
-                results += f"{addon} <@{data[0]}> - {data[-1]}s\n"
+                results += f"{addon} {data[0]} - {data[-1]}s\n"
         results += "```"
 
         if results == "```\n```":
