@@ -1,8 +1,10 @@
+import time
 import asyncio
 import discord
 import random
-from utils import buttons
+from utils import ttt_helper
 from discord.ext import commands
+from utils.typerace_helper import wordsTotal
 
 
 class FunClass(commands.Cog):
@@ -56,7 +58,7 @@ class FunClass(commands.Cog):
     @commands.max_concurrency(1, commands.BucketType.user, wait=False)
     @commands.command(aliases=['ttt', 'tic'])
     async def tictactoe(self, ctx: commands.context):
-        """Starts a tic-tac-toe game."""
+
         embed = discord.Embed(description=f'🔎 | {ctx.author.mention}'
                                         f'\n👀 |  A member is looking for someone to play **Tic-Tac-Toe**')
 
@@ -64,7 +66,7 @@ class FunClass(commands.Cog):
         embed.set_author(name='Tic-Tac-Toe', icon_url='https://i.imgur.com/RTwo0om.png')
 
         player1 = ctx.author
-        view = buttons.LookingToPlay(timeout=120)
+        view = ttt_helper.LookingToPlay(timeout=120)
 
         view.ctx = ctx
         view.message = await ctx.send(embed=embed,
@@ -74,8 +76,70 @@ class FunClass(commands.Cog):
 
         if player2:
             starter = random.choice([player1, player2])
-            ttt = buttons.TicTacToe(ctx, player1, player2, starter=starter)
+            ttt = ttt_helper.TicTacToe(ctx, player1, player2, starter=starter)
             ttt.message = await view.message.edit(view=ttt, embed=discord.Embed(title='Tic Tac Toe',description=f'{starter.mention} goes first',color=embed.color))
+
+
+    @commands.max_concurrency(1, commands.BucketType.user, wait=False)
+    @commands.command(aliases=['type','type-race'])
+    async def typerace(self, ctx: commands.context, length: int):
+        if not length:
+            length = 5
+        
+        leaderboard = []
+        generated_words = ""
+
+        for _ in range(length):
+            generated_words += random.choice(wordsTotal.split(" ")) + '\u200b'
+
+
+        embed = discord.Embed(title="Typing-Race")
+        embed.description = f"Enter the following words the fastest in order to win\n```\n{generated_words}```"
+        embed.set_footer = "Results will appear in 30 seconds"
+        embed.timestamp = discord.utils.utcnow()
+
+        start_time = time.time()
+        value = await ctx.send(embed=embed)
+
+        def check(mes):
+            return mes.channel == ctx.channel
+
+        while time.time()-start_time < 30:
+            message = await self.bot.wait_for('message', check=check)
+            
+            if message.content+" " == generated_words.replace("\u200b", " "):
+                react = False
+                for x in leaderboard:
+                    if x[0] != message.author.id:
+                        react = True
+
+                if react:
+                    user_data = [message.author.id, round(time.time()-start_time, 3)]
+                    leaderboard.append(user_data)
+                    await message.add_reaction("✅")
+                    break
+            
+            else:
+                await message.add_reaction("\U000026a0")
+
+        results = "```\n"
+        winners = ["🥇","🥈","🥉"]
+
+        for data in leaderboard:
+
+            if data in leaderboard[:3]:
+                addon = winners[leaderboard.index(data)]
+
+                results += f"{addon} <@{data[0]}> - {data[-1]}s\n"
+
+
+        value.add_field(name="Results:", value = results+"```")
+        await value.edit(embed=embed)
+        
+
+        
+
+
 
 
 async def setup(bot):

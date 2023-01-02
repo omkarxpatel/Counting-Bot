@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from utils import functions
+from utils import spotify_helper
 
 
 class Spotify(commands.Cog):
@@ -14,7 +14,7 @@ class Spotify(commands.Cog):
   
         member = member or ctx.author
         async with ctx.typing():
-            spotify = functions.Spotify(bot=self.bot, member=member)
+            spotify = spotify_helper.Spotify(bot=self.bot, member=member)
             embed = await spotify.get_embed()
 
             if not embed:
