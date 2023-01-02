@@ -261,7 +261,6 @@ class Counting(commands.Cog):
                 
                 stats_database = await database.fetch_message(1059364315662139462)
                 
-
               else:
                 
                 if latest_value == 0:
