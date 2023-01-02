@@ -139,7 +139,7 @@ class FunClass(commands.Cog):
             results = "No one typed anything!"
 
 
-        value.add_field(name="Results:", value = results)
+        embed.add_field(name="Results:", value = results)
         await value.edit(embed=embed)
         
 
