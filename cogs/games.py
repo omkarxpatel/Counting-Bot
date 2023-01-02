@@ -90,7 +90,7 @@ class FunClass(commands.Cog):
         generated_words = ""
 
         val = random.sample(wordsTotal.split(" "), k=length)
-        generated_words = ".".join(val)
+        generated_words = " ".join(val)
 
         inv_char = "\u200b"
 
@@ -109,7 +109,7 @@ class FunClass(commands.Cog):
         while time.time()-start_time < total_time:
             message = await self.bot.wait_for('message', check=check)
             
-            if message.content+" " == gernerated_words:
+            if message.content+" " == generated_words:
                 react = False
                 for x in leaderboard:
                     if x[0] != message.author.id:
