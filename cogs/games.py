@@ -108,6 +108,8 @@ class FunClass(commands.Cog):
 
         while time.time()-start_time < total_time:
             message = await self.bot.wait_for('message', check=check)
+            print(message.content)
+            print(generated_words)
             
             if message.content == generated_words:
                 react = False
