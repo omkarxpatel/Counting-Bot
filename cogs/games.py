@@ -91,7 +91,7 @@ class FunClass(commands.Cog):
 
         val = random.sample(wordsTotal.split(" "), k=length)
         print(val)
-        gernerated_words = " ".join(val)
+        gernerated_words = " ".join(list(val))
         print(generated_words)
         inv_char = "\u200b"
 
