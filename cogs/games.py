@@ -1,5 +1,6 @@
 import time
 import asyncio
+import typing
 import discord
 import random
 from utils import ttt_helper
@@ -82,20 +83,20 @@ class FunClass(commands.Cog):
 
     @commands.max_concurrency(1, commands.BucketType.user, wait=False)
     @commands.command(aliases=['type','type-race'])
-    async def typerace(self, ctx: commands.context, length: int):
-        if not length:
-            length = 5
+    async def typerace(self, ctx: commands.context, length: typing.Optional[int]=6):
         
         leaderboard = []
+        total_time = length*5
         generated_words = ""
 
-        for _ in range(length):
-            generated_words += random.choice(wordsTotal.split(" ")) + '\u200b'
+        val = random.sample(wordsTotal.split(" "), k=length)
+        gernerated_words = " ".join(val)
+        inv_char = "\u200b"
 
 
         embed = discord.Embed(title="Typing-Race")
-        embed.description = f"Enter the following words the fastest in order to win\n```\n{generated_words}```"
-        embed.set_footer(text="Results will appear in 30 seconds")
+        embed.description = f"Enter the following words the fastest in order to win\n```\n{inv_char.join(generated_words)}```"
+        embed.set_footer(text=f"Results will appear in {total_time} seconds")
         embed.timestamp = discord.utils.utcnow()
 
         start_time = time.time()
@@ -104,10 +105,10 @@ class FunClass(commands.Cog):
         def check(mes):
             return mes.channel == ctx.channel
 
-        while time.time()-start_time < 30:
+        while time.time()-start_time < total_time:
             message = await self.bot.wait_for('message', check=check)
             
-            if message.content+" " == generated_words.replace("\u200b", " "):
+            if message.content+" " == gernerated_words:
                 react = False
                 for x in leaderboard:
                     if x[0] != message.author.id:
@@ -131,12 +132,14 @@ class FunClass(commands.Cog):
                 addon = winners[leaderboard.index(data)]
 
                 results += f"{addon} <@{data[0]}> - {data[-1]}s\n"
+        results += "```"
+
+        if results == "```\n```":
+            results = "No one typed anything!"
 
 
-        value.add_field(name="Results:", value = results+"```")
+        value.add_field(name="Results:", value = results)
         await value.edit(embed=embed)
-        
-
         
 
 
