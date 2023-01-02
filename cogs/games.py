@@ -90,7 +90,9 @@ class FunClass(commands.Cog):
         generated_words = ""
 
         val = random.sample(wordsTotal.split(" "), k=length)
+        print(val)
         gernerated_words = " ".join(val)
+        print(generated_words)
         inv_char = "\u200b"
 
 
@@ -141,8 +143,6 @@ class FunClass(commands.Cog):
         value.add_field(name="Results:", value = results)
         await value.edit(embed=embed)
         
-
-
 
 
 async def setup(bot):
