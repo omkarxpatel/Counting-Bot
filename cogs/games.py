@@ -103,6 +103,7 @@ class FunClass(commands.Cog):
         start_time = time.time()
         value = await ctx.send(embed=embed)
 
+
         def check(mes):
             return mes.channel == ctx.channel
 
@@ -126,7 +127,6 @@ class FunClass(commands.Cog):
             else:
                 await message.add_reaction("\U000026a0")
 
-        print("time done")
         results = "```\n"
         winners = ["","🥇","🥈","🥉"]
 
