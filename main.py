@@ -3,8 +3,9 @@ import discord
 import aiohttp
 from colorama import Fore
 from pkgutil import iter_modules
-import traceback
 from discord.ext import commands, tasks
+import traceback
+from secretsVals import webhookurl, token
 
 
 class MyBot(commands.Bot):
@@ -60,7 +61,7 @@ class MyBot(commands.Bot):
         embed.timestamp = discord.utils.utcnow()
         embed.color = discord.Color.green()
         
-        webhook = discord.SyncWebhook.from_url('https://discordapp.com/api/webhooks/1057495225905463387/PZcbSvaDZEtR-a3uqNU6V5r12O0h7WucMX3rtpnl1dR31M3cJqIDpOV7ChWsPrsMMVac')
+        webhook = discord.SyncWebhook.from_url(webhookurl)
         webhook.send(embed=embed)
 
         if self.reset_db_on_startup:
@@ -78,10 +79,9 @@ class MyBot(commands.Bot):
 
 try:
     bot = MyBot()
-    token = "MTA1NDE0NDk0MjUyNTY0ODg5OQ.Gt0A9B.inIB-bmhjxut2FTaKc5NTj4d6LK9hEgxge4HIo"
     bot.run(token)
     
 finally:
-    webhook = discord.SyncWebhook.from_url('https://discordapp.com/api/webhooks/1057495225905463387/PZcbSvaDZEtR-a3uqNU6V5r12O0h7WucMX3rtpnl1dR31M3cJqIDpOV7ChWsPrsMMVac')
+    webhook = discord.SyncWebhook.from_url(webhookurl)
     send_info = "\n\n`1. sudo rsync -a -e \"ssh -i downloads/Key.pem\" ~/downloads/Python\ -\ VSC/Campers-Bot ubuntu@ec2-52-53-200-96.us-west-1.compute.amazonaws.com:/home/ubuntu`\n`2. sudo ssh -i downloads/Key.pem ubuntu@ec2-52-53-200-96.us-west-1.compute.amazonaws.com`"
     webhook.send(content=f'Hum Campers is Now Offline 🛑 {send_info}')
