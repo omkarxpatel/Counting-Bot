@@ -77,6 +77,7 @@ class MyBot(commands.Bot):
             if last_line != [0,0]:
                 await database.send([0,0])
 
+
 try:
     bot = MyBot()
     bot.run(token)
