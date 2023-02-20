@@ -103,11 +103,13 @@ class FunClass(commands.Cog):
         start_time = time.time()
         value = await ctx.send(embed=embed)
 
-
+        def check_reached():
+            return time.time() >= start_time+total_time
+        
         def check(mes):
             return mes.channel == ctx.channel
 
-        while time.time()-start_time < total_time//2:
+        while check_reached() == False:
             message = await self.bot.wait_for('message', check=check)
             
             if message.content == generated_words:
@@ -138,8 +140,8 @@ class FunClass(commands.Cog):
                 results += f"{addon} {data[0]} - {data[-1]}s\n"
         results += "```"
 
-        if results == "```\n```":
-            results = "No one typed anything!"
+        if not leaderboard[0]:
+            results = "```No one typed anything!```"
 
 
         embed.add_field(name="Results:", value = results)
