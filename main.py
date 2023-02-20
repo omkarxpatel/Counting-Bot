@@ -84,5 +84,4 @@ try:
     
 finally:
     webhook = discord.SyncWebhook.from_url(webhookurl)
-    send_info = "\n\n`1. sudo rsync -a -e \"ssh -i downloads/Key.pem\" ~/downloads/Python\ -\ VSC/Campers-Bot ubuntu@ec2-52-53-200-96.us-west-1.compute.amazonaws.com:/home/ubuntu`\n`2. sudo ssh -i downloads/Key.pem ubuntu@ec2-52-53-200-96.us-west-1.compute.amazonaws.com`"
-    webhook.send(content=f'Hum Campers is Now Offline 🛑 {send_info}')
+    webhook.send(content=f'Hum Campers is Now Offline 🛑')
